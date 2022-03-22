@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.dictionaryapp.feature_dictionary.presentation.WordInfoItem
 import com.example.dictionaryapp.feature_dictionary.presentation.WordInfoViewModel
 import com.example.dictionaryapp.ui.theme.DictionaryAppTheme
 import kotlinx.coroutines.flow.collectLatest
