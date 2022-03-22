@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -27,9 +28,9 @@ class MainActivity : ComponentActivity() {
                 val state = viewModel.state.value
                 val scaffoldState = rememberScaffoldState()
 
-                LaunchedEffect(key1 = true){
+                LaunchedEffect(key1 = true) {
                     viewModel.eventFlow.collectLatest { event ->
-                        when(event){
+                        when(event) {
                             is WordInfoViewModel.UIEvent.ShowSnackbar -> {
                                 scaffoldState.snackbarHostState.showSnackbar(
                                     message = event.message
@@ -38,8 +39,13 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 }
-                Scaffold(scaffoldState = scaffoldState) {
-                    Box(modifier = Modifier.background(MaterialTheme.colors.background)) {
+                Scaffold(
+                    scaffoldState = scaffoldState
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .background(MaterialTheme.colors.background)
+                    ) {
                         Column(
                             modifier = Modifier
                                 .fillMaxSize()
@@ -54,18 +60,23 @@ class MainActivity : ComponentActivity() {
                                 }
                             )
                             Spacer(modifier = Modifier.height(16.dp))
-                            LazyColumn(modifier = Modifier.fillMaxSize()){
-                                items(state.wordInfoItems.size){ i ->
+                            LazyColumn(
+                                modifier = Modifier.fillMaxSize()
+                            ) {
+                                items(state.wordInfoItems.size) { i ->
                                     val wordInfo = state.wordInfoItems[i]
-                                    if (i>0){
+                                    if(i > 0) {
                                         Spacer(modifier = Modifier.height(8.dp))
                                     }
                                     WordInfoItem(wordInfo = wordInfo)
-                                    if (i< state.wordInfoItems.size -1){
+                                    if(i < state.wordInfoItems.size - 1) {
                                         Divider()
                                     }
                                 }
                             }
+                        }
+                        if(state.isLoading) {
+                            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                         }
                     }
                 }
